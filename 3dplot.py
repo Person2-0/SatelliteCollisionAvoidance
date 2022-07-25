@@ -6,6 +6,7 @@ from skyfield.api import EarthSatellite
 from scipy.spatial import KDTree
 from numpy.linalg import norm
 
+
 def satellitepos_vels(satellites, time):
     pos_vels = []
     for satellite in satellites:
@@ -57,10 +58,17 @@ def findpairs(satellites, pos_vels, maxdistance=100):
 
 
 def approach_distance(pairpos_vels):
-    #make_delta_array[pairnumber, pos_vels, x_y_z]
+    # make_delta_array[pairnumber, pos_vels, x_y_z]
     deltas = (pairpos_vels[:, 1, :, :]
              -pairpos_vels[:, 0, :, :])
     delta_norms = np.sqrt(np.sum(deltas**2, axis=-1))
+    # plt.hist(delta_norms[:, 0])
+    # plt.show()
+    distances = []
+    for row in pairpos_vels:
+        distance = mindist(row[0,0], row[1, 0], row[0,1], row[1,1])
+        distances.append(distance)
+    distances = np.array(distances)
     pass
 
 
