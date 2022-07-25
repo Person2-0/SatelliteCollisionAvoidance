@@ -45,22 +45,24 @@ def plotearth(ax):
 
     plt.show()
 
+
 def findpairs(satellites, pos_vels, maxdistance=100):
     tree = KDTree(pos_vels[:, 0, :])
     pairs = tree.query_pairs(r=maxdistance)
     pairs = np.array(list(pairs))
-    # Make array[pairnumber, sat0_or_sat1, pos_or_vel, x_y_z]
+    # make_array[pairnumber, sat0_or_sat1, pos_or_vel, x_y_z]
     pairpos_vels = pos_vels[pairs]
     appdist = approach_distance(pairpos_vels)
     pass
 
 
 def approach_distance(pairpos_vels):
-    #Make delta array[pairnumber, pos_vels, x_y_z]
+    #make_delta_array[pairnumber, pos_vels, x_y_z]
     deltas = (pairpos_vels[:, 1, :, :]
              -pairpos_vels[:, 0, :, :])
     delta_norms = np.sqrt(np.sum(deltas**2, axis=-1))
     pass
+
 
 def plotsats(ax, pos_vels):
     ax.plot(pos_vels[:, 0, 0], pos_vels[:, 0, 1], pos_vels[:, 0, 2], ",k")
@@ -69,6 +71,7 @@ def plotsats(ax, pos_vels):
     ax.set(xlim = [-r, r], ylim = [-r, r], zlim = [-r, r])
     plt.show()
     pass
+
 
 def mindist(pos0, pos1, vel0, vel1):
     r = pos1 - pos0
@@ -88,7 +91,6 @@ time = ts.now()
 pos_vels = satellitepos_vels(satellites, time)
 print(pos_vels.shape)
 pairs = findpairs(satellites, pos_vels)
-
 if True:
     fig = plt.figure(figsize=[10, 8])  # [12, 10]
 
