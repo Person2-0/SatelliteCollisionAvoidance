@@ -30,7 +30,7 @@ def plotearth(ax):
         cph, sph = [f(phi) for f in [np.cos, np.sin]]
         lon = np.vstack((lon0[0]*cph - lon0[1]*sph,
                          lon0[1]*cph + lon0[0]*sph,
-                         lon0[2]) )
+                         lon0[2]))
         lons.append(lon)
 
     lat0 = re*np.vstack((cth, sth, zth))
@@ -53,6 +53,8 @@ def findpairs(satellites, pos_vels, maxdistance=100):
     pairs = np.array(list(pairs))
     # make_array[pairnumber, sat0_or_sat1, pos_or_vel, x_y_z]
     pairpos_vels = pos_vels[pairs]
+    # plt.hist(pairpos_vels[:, 1]
+    # plt.show
     appdist = approach_distance(pairpos_vels)
     pass
 
@@ -66,7 +68,7 @@ def approach_distance(pairpos_vels):
     # plt.show()
     distances = []
     for row in pairpos_vels:
-        distance = mindist(row[0,0], row[1, 0], row[0,1], row[1,1])
+        distance = mindist(row[0, 0], row[1, 0], row[0, 1], row[1, 1])
         distances.append(distance)
     distances = np.array(distances)
     pass
@@ -74,9 +76,9 @@ def approach_distance(pairpos_vels):
 
 def plotsats(ax, pos_vels):
     ax.plot(pos_vels[:, 0, 0], pos_vels[:, 0, 1], pos_vels[:, 0, 2], ",k")
-    ax.set_box_aspect((1,1,1))
+    ax.set_box_aspect((1, 1, 1))
     r = 1e4
-    ax.set(xlim = [-r, r], ylim = [-r, r], zlim = [-r, r])
+    ax.set(xlim=[-r, r], ylim=[-r, r], zlim=[-r, r])
     plt.show()
     pass
 
@@ -99,11 +101,15 @@ time = ts.now()
 pos_vels = satellitepos_vels(satellites, time)
 print(pos_vels.shape)
 pairs = findpairs(satellites, pos_vels)
+
+
 if True:
     fig = plt.figure(figsize=[10, 8])  # [12, 10]
 
-    ax  = fig.add_subplot(1, 1, 1, projection='3d')
-    #plotearth(ax)
+    ax = fig.add_subplot(1, 1, 1, projection='3d')
+
+
+    # plotearth(ax)
     plotsats(ax, pos_vels)
 
     plt.show()
