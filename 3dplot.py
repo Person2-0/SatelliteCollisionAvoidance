@@ -112,7 +112,7 @@ def mindist(pos0, pos1, vel0, vel1):
     return distance
 
 
-def plotsats(ax, positions,):
+def plotsats(ax, positions, ):
     ax.plot(positions[:, 0], positions[:, 1], positions[:, 2], ",k")
     ax.set_box_aspect((1, 1, 1))
     r = 1e4
@@ -151,12 +151,13 @@ def getpairs(satellite_url=None, tstart=None, tend=None, outdir=None):
     fits.writeto(outfile, results)
     read_back = fits.getdata(outfile)
     return results
-    pass
 
 
 def pairs_for_time(satellites, time, search_radius=100, maxdistance=10, timestep=10):
     pos_vels = satellitepos_vels(satellites, time)
-    print(pos_vels.shape)
+    if np.any(np.isnan(pos_vels)):
+        print(pos_vels.shape, np.count_nonzero(np.isnan(pos_vels[:, 0, 0])), "invalidpositions")
+        pos_vels = np.nan_to_num(pos_vels)
     pairs, distances, delta_times = findpairs(pos_vels, search_radius=search_radius,
                                               maxdistance=maxdistance, timestep=timestep)
     times = time + delta_times / seconds_per_day
@@ -180,6 +181,7 @@ def pairs_for_time(satellites, time, search_radius=100, maxdistance=10, timestep
     result["distance"] = new_distance
     return result
 
+
 def plot_results(outdir=None):
     if outdir is None:
         outdir = outdir_default
@@ -187,23 +189,32 @@ def plot_results(outdir=None):
     fig = plt.figure(figsize=[10, 8])  # [12, 10]
 
     ax = fig.add_subplot(1, 1, 1, projection='3d')
+    all_data = []
     for infile in outdir.glob("conjunction*.fits"):
         data = fits.getdata(infile)
+        all_data.append(data)
+    all_data = np.concatenate(all_data)
 
     # plotearth(ax)
-    plotsats(ax, data["positions"].reshape(2*len(data), 3))
+    plotsats(ax, all_data["positions"].reshape(2 * len(data), 3))
 
     plt.show()
+    fig.savefig(outdir.joinpath("conjunction_locations.png"))
 
 
 def main():
+    outdir = "/home/bella/Documents/Satellites"
     ts = load.timescale()
-    tstart = ts.tt(2022, 7, 25, 0, 0, 0)
-    tend = tstart + 0.1
-    result = getpairs(tstart=tstart, tend=tend)
-
-
-
+    tfirst = ts.tt(2022, 7, 29, 0, 0, 0)
+    tdelta = 0.25
+    while True:
+        result = getpairs(tstart=tfirst, tend=tfirst + tdelta, outdir=outdir)
+        tfirst = tfirst + tdelta
+        plot_results(outdir=outdir)
+    # tstart = ts.tt(2022, 7, 25, 0, 0, 0)
+    # tstart = tstart + 200/seconds_per_day
+    # tend = tstart + 0.1
+    # result = getpairs(tstart=tstart, tend=tend)
 
 
 if __name__ == "__main__":
