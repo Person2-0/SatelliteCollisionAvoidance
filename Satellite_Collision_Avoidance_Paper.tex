@@ -1,0 +1,123 @@
+\documentclass[11pt, a4paper, twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup[table]{singlelinecheck=false}
+\usepackage[subrefformat=parens,labelformat=parens]{subcaption}
+\usepackage[a4paper]{geometry}
+\geometry{top=1.95cm, bottom=1.8cm, left=2.4cm, right=2.4cm, headsep=0.5cm, headheight=1cm, 
+            footskip=0in, footnotesep=0in, marginparwidth = 0pt,
+            hoffset=0in, voffset=0cm}
+\setlength{\parskip}{0cm}
+\renewcommand{\baselinestretch}{1} 
+\usepackage{hyperref}
+\usepackage[backend=bibtex,style=numeric-comp,sorting=none,firstinits=true,maxbibnames=99]{biblatex}
+\DeclareNameAlias{author}{last-first}
+\bibliography{reference}
+
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+\rfoot{\thepage}
+
+\usepackage{sectsty} 
+\sectionfont{\fontsize{12}{15}\selectfont}
+\subsectionfont{\fontsize{12}{15}\selectfont}
+
+
+\usepackage{lipsum}  
+
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+  \onehalfspacing
+  \fontsize{20}{23}\selectfont
+  \textbf{\@title} \\
+  \hfill \break
+  \fontsize{12}{15}\selectfont
+  \@author
+\end{flushleft}\egroup
+}
+\makeatother
+
+\title{Satellite Collision Avoidance}
+\author{%
+        \textbf{Gabriella Armijo}\\
+        \fontsize{11}{14}\selectfont
+        Institute for Computing in Research \\
+        July 25, 2022 \\
+        }
+
+\begin{document}
+
+\twocolumn[
+  \begin{@twocolumnfalse}
+    \maketitle
+
+\noindent \textbf{Abstract:} This paper presents the work I did in satellite collision avoidance. the objectives were to plot all current satellites in their orbits, to conduct a near neighbor analysis of all satellites that were within 100km of each other, and to conduct an analysis of how often certain satellites came within 100km. This was done by using matplotlib to plot the satellites on the plot approx 25,000 satellites. using kdtrees the nearest neighbor analysis was done. The results that I got were that a good number of them were Starlink satellites which closely follow each other in a line. the rest are just random encounters or satellite debris that got too close. The significance of this is \\
+
+%An abstract is a shortened version of the paper and should contain all information necessary for the reader to determine: (1) what the objectives of the study were; (2) how the study was done; (3) what results were obtained; (4) the significance of the results. The typical length of an abstract is 150 – 300 words.
+
+\noindent \textbf{Keywords:}  Satellites, keyword2, keyword3, etc.
+
+  \end{@twocolumnfalse}
+  \vspace{1.5em}
+]
+
+% \begin{multicols}{2}
+
+\section{Introduction}
+\label{introduction}
+
+
+\section{Background}
+\label{background}
+
+
+\section{Methods}
+\label{methods}
+The first step in this process was to create a 3d plot of all the satellites curently in orbit. To do this I used matplotlib to 
+
+\section{Data Collection}
+\label{datacollection}
+Place images in this section.
+
+
+
+\section{Conclusion}
+\label{conclusion}
+
+
+
+Reference to the figure should follow the format “Fig. \ref{fig:01}”. Use “Figure \ref{fig:01}” instead if beginning of sentence. 
+
+
+\section*{Acknowledgement}
+\label{acknowledgement}
+Funding supports should be acknowledged in this section.\\
+
+\par
+
+\section{In-text citation}
+References should be arranged by the order in which they appear in the text. The example \LaTeX{} command for different in-text citation (please see the source code):
+\begin{enumerate}
+    \item Matplotlib
+    \item Numpy
+    \item Scipy
+    \item  \cite{kusoncum2021heuristics}
+
+\end{enumerate}
+
+% \bibliographystyle{unsrt}
+% \bibliography{reference}
+\printbibliography
+
+
+
+\end{document}
