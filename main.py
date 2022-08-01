@@ -11,7 +11,7 @@ from astropy.io import fits
 from pathlib import Path
 
 seconds_per_day = 24 * 60 * 60
-outdir_default = Path("/tmp/conjunctions")
+outdir_default = Path("/home/bella/Documents/Satellites")
 
 
 def satellitepos_vels(satellites, time):
@@ -194,18 +194,47 @@ def plot_results(outdir=None):
         data = fits.getdata(infile)
         all_data.append(data)
     all_data = np.concatenate(all_data)
-
+    # FIXME why is the distance different from extrapolated distance different for some satellites
+    # quick patch
+    all_data = all_data[all_data["distance"]<10]
     # plotearth(ax)
-    plotsats(ax, all_data["positions"].reshape(2 * len(data), 3))
+    plotsats(ax, all_data["positions"].reshape(-1, 3))
 
     plt.show()
     fig.savefig(outdir.joinpath("conjunction_locations.png"))
+    dright, dup = delta_in_vertical_coordinates(all_data)
+    figvert = plt.figure(figsize=[10, 8])
+    axvert = figvert.add_subplot(1, 1, 1)
+    axvert.plot(dright, dup, ",")
+    axvert.set(aspect=1)
+    plt.show()
+    pass
 
+def cross(a, b):
+    x = a[..., 1] * b[..., 2] -a[..., 2] * b[..., 1]
+    y = a[..., 2] * b[..., 0] - a[..., 0] * b[..., 2]
+    z = a[..., 0] * b[..., 1] - a[..., 1] * b[..., 0]
+    result = np.vstack((x, y, z)).T
+    return result
+
+
+def delta_in_vertical_coordinates(data):
+    positions = data["positions"]
+    deltas = positions[:, 1] - positions[:, 0]
+    velocities = data["velocities"]
+    delta_velocities = velocities[:, 1] - velocities[:, 0]
+    up = positions[:, 1]
+    up = up/np.linalg.norm(up, axis=-1).reshape((-1, 1))
+    right = cross(delta_velocities, up)
+    right = right/np.linalg.norm(right, axis=-1).reshape((-1, 1))
+    dright = np.sum(deltas * right, axis=-1)
+    dup = np.sum(deltas * up, axis=-1)
+    return dright, dup
 
 def main():
-    outdir = "/home/bella/Documents/Satellites"
     ts = load.timescale()
-    tfirst = ts.tt(2022, 7, 29, 0, 0, 0)
+    outdir = outdir_default
+    tfirst = ts.tt(2022, 8, 1, 0, 0, 0)
     tdelta = 0.25
     while True:
         result = getpairs(tstart=tfirst, tend=tfirst + tdelta, outdir=outdir)
@@ -218,5 +247,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    plt.ion()
+    # main()
     plot_results()
