@@ -118,7 +118,6 @@ def plotsats(ax, positions, ):
     r = 1e4
     ax.set(xlim=[-r, r], ylim=[-r, r], zlim=[-r, r])
     plt.show()
-    pass
 
 
 def getpairs(satellite_url=None, tstart=None, tend=None, outdir=None):
@@ -196,11 +195,11 @@ def plot_results(outdir=None):
     all_data = np.concatenate(all_data)
     # FIXME why is the distance different from extrapolated distance different for some satellites
     # quick patch
-    all_data = all_data[all_data["distance"]<10]
+    all_data = all_data[all_data["distance"] < 10]
     # plotearth(ax)
     plotsats(ax, all_data["positions"].reshape(-1, 3))
-
     plt.show()
+
     fig.savefig(outdir.joinpath("conjunction_locations.png"))
     dright, dup = delta_in_vertical_coordinates(all_data)
     figvert = plt.figure(figsize=[10, 8])
@@ -210,8 +209,9 @@ def plot_results(outdir=None):
     plt.show()
     pass
 
+
 def cross(a, b):
-    x = a[..., 1] * b[..., 2] -a[..., 2] * b[..., 1]
+    x = a[..., 1] * b[..., 2] - a[..., 2] * b[..., 1]
     y = a[..., 2] * b[..., 0] - a[..., 0] * b[..., 2]
     z = a[..., 0] * b[..., 1] - a[..., 1] * b[..., 0]
     result = np.vstack((x, y, z)).T
@@ -224,18 +224,19 @@ def delta_in_vertical_coordinates(data):
     velocities = data["velocities"]
     delta_velocities = velocities[:, 1] - velocities[:, 0]
     up = positions[:, 1]
-    up = up/np.linalg.norm(up, axis=-1).reshape((-1, 1))
+    up = up / np.linalg.norm(up, axis=-1).reshape((-1, 1))
     right = cross(delta_velocities, up)
-    right = right/np.linalg.norm(right, axis=-1).reshape((-1, 1))
+    right = right / np.linalg.norm(right, axis=-1).reshape((-1, 1))
     dright = np.sum(deltas * right, axis=-1)
     dup = np.sum(deltas * up, axis=-1)
     return dright, dup
 
+
 def main():
     ts = load.timescale()
     outdir = outdir_default
-    tfirst = ts.tt(2022, 8, 1, 0, 0, 0)
-    tdelta = 0.25
+    tfirst = ts.tt(2022, 8, 2, 0, 0, 0)
+    tdelta = 0.001
     while True:
         result = getpairs(tstart=tfirst, tend=tfirst + tdelta, outdir=outdir)
         tfirst = tfirst + tdelta
