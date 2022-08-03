@@ -4,13 +4,14 @@
 % Title page details: 
 \title{Satellite Collision Avoidance} 
 \author{Gabriella Armijo}
+\institute{Institute for Computing in Research}
 \date{\today}
 \logo{\large \LaTeX{}}
 
 
 \begin{document}
 
-% Title page frame
+% Slide 1
 \begin{frame}
     \titlepage 
 \end{frame}
@@ -19,23 +20,105 @@
 \logo{}
 
 
-% Outline frame
+% Slide 2
 \begin{frame}{Outline}
     \tableofcontents
 \end{frame}
 
-
-% Lists frame
-\section{}
-\begin{frame}{}
-
+% SLide 3
+\section{Project Goal}
+\begin{frame}{Project Goal}
+\begin{itemize}
+\item Track satellites to see how likely they were collide. 
+\item See how often they got within 100 km of each other. 
+\item Analyze those results to see what satellites showed up the most.
+\end{itemize}
 \end{frame}
 
+% Slide 4
+\section{Introduction}
+\begin{frame}{Kessler Syndrome}
+A scenario in which the density of objects in Low Earth Orbit (LEO) is high enough that each collision creates debris that increases the likelihood of more collisions.
+\end{frame}
 
-% Blocks frame
-\section{}
-\begin{frame}{}
+% Slide 5
+\section{Methods}
+\begin{frame}{3D Plot}
+\includegraphics[width=0.8\textwidth]{Screenshot from 2022-08-02 17-51-28.png}
+\end{frame}
 
-\end{frame} 
+% Slide 6
+\begin{frame}{Conjunction Plots}
+\includegraphics[width=5cm]{Satconjunction81.png}
+\includegraphics[width=5cm]{Screenshot from 2022-08-02 09-32-40.png}
+\end{frame}
+
+% Slide 7
+\begin{frame}{Satellite Point of View}
+\centering
+\includegraphics[scale=0.25]{SatPOV.png}
+\end{frame}
+
+% Slide 8
+\begin{frame}{Dot Product}
+\begin{figure}
+\includegraphics[scale=0.5]{Screenshot from 2022-08-02 18-44-33.png}
+	\caption{Dot Product}
+\end{figure}
+\end{frame}
+
+% Slide 9
+\begin{frame}
+\includegraphics[scale=0.4]{Screenshot from 2022-08-02 18-42-48.png}
+\end{frame}
+
+% Slide 10
+\section{Results}
+\begin{frame}{Results}
+\includegraphics[scale=0.4]{Screenshot from 2022-08-02 19-39-49.png}
+\includegraphics[scale=0.35]{Screenshot from 2022-08-02 19-40-35.png}
+\includegraphics[scale=0.35]{Screenshot from 2022-08-02 19-40-58.png}
+\includegraphics[scale=0.4]{Screenshot from 2022-08-03 09-18-57.png}
+\includegraphics[scale=0.35]{Screenshot from 2022-08-03 09-19-42.png}
+\includegraphics[scale=0.4]{Screenshot from 2022-08-03 09-20-10.png}
+\end{frame}
+
+% Slide 11
+\section{Relevance}
+\begin{frame}{Why is this important?}
+\begin{itemize}
+\item Prevents Collisions
+\item Keeping tabs on growing constellations
+\item Understanding satellite movement
+\end{itemize}
+\end{frame}
+
+%Slide 12
+\section{Future Work}
+\begin{frame}{Future Work}
+\begin{itemize}
+\item Conjunction Plots
+\item Starlink orbital readjustments
+\item Future Collisions
+\end{itemize}
+\end{frame}
+
+% Slide 13
+\begin{frame}{Acknowledgements}
+I would like to thank my mentor, David Palmer, for everything he has taught me.
+\vfill
+I would also like to thank the Institute for Computing in Research and everyone involved for giving me and my fellow interns this opportunity.
+\end{frame}
+
+% Slide 14
+\section{References}
+\begin{frame}{References}
+\begin{itemize}
+\item [1] Mann, A., Pultarova, T.,  Howell, E. (2022, April 14). SpaceX Starlink Internet: Costs, Collision Risks and How it Works. https://www.space.com/spacex-starlink-satellites.html
+\item [2] Lambert, J. (2018, september). Fengyun-1C Debris Cloud Evolution Over One Decade.
+\item [3] McKnight, D., Shouppe, M., (2021, November 18). Analysis of the Cosmos 1408 Breakup  https://leolabs-space.medium.com/analysis-of-the-cosmos-1408-breakup-71b32de5641f
+\item [4] Wall, M. (2018, November 15,). Kessler Syndrome and the Space Debris Problem  https://www.space.com/kessler-syndrome-space-debris
+\end{itemize}
+\end{frame}
 
 \end{document}
