@@ -188,6 +188,9 @@ def plot_results(outdir=None):
     fig = plt.figure(figsize=[10, 8])  # [12, 10]
 
     ax = fig.add_subplot(1, 1, 1, projection='3d')
+    ax.set_xlabel('km')
+    ax.set_ylabel('km')
+    ax.set_zlabel('km')
     all_data = []
     for infile in outdir.glob("conjunction*.fits"):
         data = fits.getdata(infile)
@@ -248,6 +251,6 @@ def main():
 
 
 if __name__ == "__main__":
-    plt.ion()
+    # plt.ion()
     # main()
     plot_results()
