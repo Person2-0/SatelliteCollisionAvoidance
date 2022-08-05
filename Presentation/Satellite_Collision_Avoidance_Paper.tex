@@ -6,6 +6,7 @@
 \usepackage{indentfirst}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{hanging}
 \usepackage{caption}
 \captionsetup[table]{singlelinecheck=false}
 \usepackage[subrefformat=parens,labelformat=parens]{subcaption}
@@ -51,7 +52,7 @@
         \textbf{Gabriella Armijo}\\
         \fontsize{11}{14}\selectfont
         Institute for Computing in Research \\
-        July 25, 2022 \\
+        August 4, 2022 \\
         }
 
 \begin{document}
@@ -60,11 +61,11 @@
   \begin{@twocolumnfalse}
     \maketitle
 
-\noindent \textbf{Abstract:} This paper presents the work I did in satellite collision avoidance. the objectives were to plot all current satellites in their orbits, to conduct a near neighbor analysis of all satellites that were within 100km of each other, and to conduct an analysis of how often certain satellites came within 100km. This was done by using matplotlib to plot the satellites on the plot approx 25,000 satellites. using kdtrees the nearest neighbor analysis was done. The results that I got were that a good number of them were Starlink satellites which closely follow each other in a line. the rest are just random encounters or satellite debris that got too close. The significance of this is \\
+\noindent \textbf{Abstract:} This paper presents the work I did in satellite collision avoidance. For this, I did a near neighbor analysis for any satellite pairs within 100 km of each other. These analyses were plotted on a conjunction plot to show all close encounters and where they happened. The results I yielded from this experiment were that certain groups of satellites or satellite debris show up very often. These are Starlink satellites, debris from China’s Fengyun 1-C weather satellite, debris from Iridium 33 communications satellite, and debris from Russia’s Kosmos (Cosmos) 1408 electronic signals intelligence (ELINT) satellite. Some close encounters are just random. Close encounters lead to a greater chance of collision risks. This is important because as more satellites are sent into the atmosphere, there is a greater chance for collision, more close encounters, and orbits have to be altered continuously to prevent collisions.   \\
 
-%An abstract is a shortened version of the paper and should contain all information necessary for the reader to determine: (1) what the objectives of the study were; (2) how the study was done; (3) what results were obtained; (4) the significance of the results. The typical length of an abstract is 150 – 300 words.
 
-\noindent \textbf{Keywords:}  Satellites, keyword2, keyword3, etc.
+
+\noindent \textbf{Keywords:}  Satellite, Starlink, Fengyun 1-C, Cosmos 1408, Cosmos 2251, and Iridium 33.
 
   \end{@twocolumnfalse}
   \vspace{1.5em}
@@ -74,50 +75,69 @@
 
 \section{Introduction}
 \label{introduction}
-
+During this project, the goal was to see how often satellites got too close. I looked at satellites within a 100 km range of each other. As the project progressed I looked at satellite encounters that were within 10 km of each other. This was done by conducting near neighbor analyses of each satellite and making conjunction plots to see where satellites got closest to each other. This was used to determine which satellites or satellite constellations pose the most risk for collisions. 
 
 \section{Background}
 \label{background}
-
+	The fundamental rule when launching anything into the atmosphere is knowing that any object in space has the potential to create debris. This is essential when it comes to analyzing satellites and close encounters. At any time, something could collide with a satellite and create a cloud of debris. As described in Kessler Syndrome, the density of objects in Low Earth Orbit (LEO) is high enough that debris from collisions increases the likelihood of more collisions. This is a problem that is faced every time new payloads/ satellites are launched into the atmosphere. 
+	
+	Collisions are likely to be found in Low Earth Orbits (LEO) because there is very little space in LEO since most satellites are located in LEO. Any satellite in LEO has an orbit between 160 and 1000 km altitude. Satellites in LEO are mainly used for satellite imaging, communications, satellite Internet, and the International Space Station. The rest of the satellites are either in Middle Earth Orbits (MEO) or in Geosynchronous Orbits (GEO). 
+	
+	SpaceX's Starlink Constellation is a big contributor to close encounters. Starlink has launched nearly 3,000 satellites. They plan to have a total of 40,000 operational satellites in LEO to give the best coverage for their satellite Internet program. Each batch of satellites that Starlink launches carries about 50 satellites. These are launched into LEO and deposited into its orbit. Most close encounters are because these satellites trail behind each other too closely. Other close encounters are because Starlink satellites pass by too close to other orbiting satellites. Starlink satellites have collision avoidance technology that prevents them from colliding with other satellites. SpaceX does not give full reports on how often they need to adjust their satellite orbits. 
+	
+	Other close encounters are because of debris from satellite collisions. One of the worst collisions was between Iridium 33 and Kosmos 2251, which took place on February 10, 2009. The satellites were traveling at 11.7 km/s and were at 789 km altitude. The collision resulted in over 1,000 pieces of debris. Some fragments have been involved in other collisions and many more have been close encounters. At the time of the collision, Iridium 33 was still operational, while Kosmos 2251 was deactivated. 
+	
+	Anti-Satellite tests (ASAT) also create debris. Each time a country blows up a satellite, it creates thousands of pieces of debris that complicate matters and increase the likelihood of collisions. It also increases the rate of close encounters.  To date, the U.S., Russia, China, and Russia have done ASAT tests on their satellites. 
+	
+	Every close encounter that happens is a collision that could have happened. Keeping track of close encounters is important to look at because many satellite operators may need to constantly adjust the orbit to prevent collisions. These close encounters keep us vigilant and being able to look ahead to see any potential collisions lets us know right away if adjustments need to be made. 
 
 \section{Methods}
 \label{methods}
-The first step in this process was to create a 3d plot of all the satellites curently in orbit. To do this I used matplotlib to 
 
-\section{Data Collection}
-\label{datacollection}
-Place images in this section.
+	Each analysis that I ran pulled information from a two-line element set (TLE) that I downloaded from Space-track. Using Kdtrees, I ran nearest neighbor analyses, looking at pairs of satellites within 10 km of each other.  Looking at the position of each satellite in the pair, I used dot product to calculate the velocity between the satellites in the pair. 
+
+$$\vec{a} \cdot \vec{b}=\left | \vec{a} \right |\left | \vec{b} \right |\cos\theta $$
+Dot product is equal to the product of the magnitudes of the two vectors and the cosine of the angle between the two vectors.
+
+	Using this information, I was able to make conjunction plots of all the close encounters and where they took place. The information was also used to make an array of each close encounter that gave information as to the Julian Date, the satellite names, the catalog numbers,  x,y,z, positions, velocities, initial distances, and final distances of each satellite in a satellite pair. I then wrote a function that can start at any given time steps forward every ten seconds that calls on this information to report every close encounter. I also used cross product to make a satellite point of view that showed the close encounters in a 2D plot that gave the positions relative to up, down, left, and right as opposed to x,y, and z. 
+	
+	
+\section{Results}
+\label{results}
+
+\begin{figure}
+\includegraphics[scale=0.35]{Screenshot from 2022-08-04 10-29-10.png}
+\caption{Plot of all satellites}
+
+\includegraphics[scale=0.35]{Screenshot from 2022-08-04 10-32-50.png }
+\caption{Conjunction Plot}
+\end{figure}
+	Shown in Figure 1, results from the 3dplot of all the satellites showed that many satellites on the TLE gather around Earth's poles. After further analysis, this turns out to be a place where satellite debris is commonly found. 
+
+	My conjunction plot showed similar results as seen in Figure 2.
+Many close encounters between satellites and satellite debris took place near the poles. But they never took place directly over the poles Figure 3: Satellites are not commonly known to travel over the poles because it is not necessary. 
+
+	Results gathered in my array showed satellites that come up frequently were Starlink satellites proving the point that Starlink satellites are becoming a huge problem in close encounters and/or future collisions. Space debris as predicted was also a huge contributor Satellite debris names at came up frequently were Iridium 33, Kosmos 2251, Fengyun 1C, and Kosmos 1408. Fengyun 1C was a weather satellite that China shot down in an anti-satellite missile test back in 2007. Kosmos 1408 was an electronic signals intelligence (ELINT) satellite that Russia shot down in a similar test in November of 2021.  
+
+\subsection{Future Work}
+\label{Future Work}
+Going forward, I would like to make more conjunctions to see where pairs from the Starlink constellation, Iridium 33 debris, Kosmos debris, and Fengyun debris happen. I would also like to conduct further studies into how often Starlink has to readjust their orbits to prevent from hitting other satellites. I would also like to use the current information I have to see how many satellites are to collide if their orbits are not adjusted.
+
+\section{Acknowledgments}
+	I would like to thank my mentor, David Palmer, of the Los Alamos National Labs, for the time he took to guide me and teach me about satellites. I would also like to thank the Institute for Computing in research for providing me this opportunity to perform this research on satellites.
+\section{References}
+\begin{hangparas}{.25in}{1}
+
+Mann, A., Pultarova, T.,  Howell, E. (2022, April 14). SpaceX Starlink Internet: \emph Costs, Collision Risks and How it Works. Available at https://www.space.com/spacex-starlink-satellites.html
 
 
+McKnight, D., Shouppe, M., (2021, November 18). Analysis of the Cosmos 1408 Breakup \emph Available at https://leolabs-space.medium.com/analysis-of-the-cosmos-1408-breakup-71b32de5641f
 
-\section{Conclusion}
-\label{conclusion}
+Lambert, J. (2018, September). Fengyun-1C Debris Cloud Evolution Over One Decade. % Available at https://ui.adsabs.harvard.edu/abs/2018amos.confE..50L/abstract#:~:text=Over%20a%20decade%20ago%2C%20on,an%20inclination%20of%2098.8%20degrees.
 
+Wall, M. (2018, November 15,). Kessler Syndrome and the Space Debris Problem Available \emph at https://www.space.com/kessler-syndrome-space-debris
 
-
-Reference to the figure should follow the format “Fig. \ref{fig:01}”. Use “Figure \ref{fig:01}” instead if beginning of sentence. 
-
-
-\section*{Acknowledgement}
-\label{acknowledgement}
-Funding supports should be acknowledged in this section.\\
-
-\par
-
-\section{In-text citation}
-References should be arranged by the order in which they appear in the text. The example \LaTeX{} command for different in-text citation (please see the source code):
-\begin{enumerate}
-    \item Matplotlib
-    \item Numpy
-    \item Scipy
-    \item  \cite{kusoncum2021heuristics}
-
-\end{enumerate}
-
-% \bibliographystyle{unsrt}
-% \bibliography{reference}
-\printbibliography
-
-
+Weeden, B. (2010 November 10,) 2009 Iridium-Cosmos Collision Fact Sheet 
+\end{hangparas}
 
 \end{document}
