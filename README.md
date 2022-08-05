@@ -1,5 +1,5 @@
 # SatelliteCollisionAvoidance
-This project looks for pairs of satellites that come within 100km of each other. For each pair, it writes the time, names, catalog numbers, positions, velocities, distances, and extrapolated sistances of the satellites to a file. It will start at a designated time and jumps forward every 10 seconds and adds it to the file. 
+This project looks for pairs of satellites that come within 10km of each other. For each pair, it writes the time, names, catalog numbers, positions, velocities, distances, and extrapolated sistances of the satellites to a file. It will start at a designated time and jumps forward every 10 seconds and adds it to the file. 
 
 ## Installation
 To be able to run this code you will need the following Python libraries:
